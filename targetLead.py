@@ -1,7 +1,6 @@
 from math import cos,sin,sqrt,acos,pi
 import tkinter
 
-#https://www.desmos.com/calculator/oqwigwwtvt
 '''
 (d*cos(b),d*sin(b)) = target position from target distance vector and bearing angle (from x axis)
 (d*cos(b)+v*cos(h)*t,d*sin(b)+v*sin(h)*t) = position + speed(v) and target heading (h), note free variable t used to represent time
@@ -174,15 +173,18 @@ def calculate_lead(distance_vector,velocity_vector,t):
 def init_lines():
     canvas.create_line(0,OFFSET.y,WINDOW_DIMENSIONS.x,OFFSET.y,fill='red')#x axis
     canvas.create_line(OFFSET.x,0,OFFSET.x,WINDOW_DIMENSIONS.y,fill='red')#y axis
-    VERTICES = [Vec() for x in range(10)]
+    VERTICES = [Vec() for x in range(4)]
+    color = 'black'
     for i in range(1,len(VERTICES)):
         VERTICES[i].y *= -1#invert y as +y goes down tkinter window
         v1 = VERTICES[i-1]*SCALE + OFFSET
         v2 = VERTICES[i]*SCALE + OFFSET
+        if i >= 3:
+            color = 'red'
         try:
-            OBJECTS[i-1] = canvas.create_line(v1.x,v1.y, v2.x,v2.y)
+            OBJECTS[i-1] = canvas.create_line(v1.x,v1.y, v2.x,v2.y,fill=color)
         except IndexError:
-            OBJECTS.append(canvas.create_line(v1.x,v1.y, v2.x,v2.y))#init array of line objects
+            OBJECTS.append(canvas.create_line(v1.x,v1.y, v2.x,v2.y,fill=color))#init array of line objects
 
 
 def render():#stationary object and moving camera
@@ -275,7 +277,3 @@ root.after(100,init_lines)
 #root.after(200,render)
 root.after(200,run)
 root.mainloop()
-
-
-
-
