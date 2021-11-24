@@ -150,8 +150,11 @@ def binary_estimate(distance_vector,velocity_vector,target_speed,estimate=100, d
     d = velocity_vector.y
     f = s**2 - (a/x + b)**2 - (c/x + d)**2
     f_dash = ((-2*(-a**2-c**2))/(x**3)) - ((-2*a*b-2*c*d)/x**2)
-    difference = f/f_dash
-    print(difference)
+    if f_dash < 1:#to prevent overflows
+        difference = (f/(f_dash*1000))/1000
+    else:
+        difference = f/f_dash
+    #print(difference)
     if abs(difference) < 0.1:
         return estimate - difference
     return binary_estimate(distance_vector,velocity_vector,target_speed,estimate - difference, difference, depth+1)
@@ -224,7 +227,6 @@ def run():
     for i in range(len(VERTICES)):
         VERTICES[i].y *= -1#invert y as +y goes down tkinter window
     render()
-    #print(VERTICES)
     
 
 root = tkinter.Tk()
