@@ -1,4 +1,6 @@
 # targetLead
+inspired by silent hunter u-boats
+
 Takes inputs through GUI:
   distance to target(m)
   bearing to target (degrees from positive x axis)
