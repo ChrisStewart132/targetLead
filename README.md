@@ -2,9 +2,13 @@
 inspired by silent hunter u-boats
 
 Takes inputs through GUI:
+
   distance to target(m)
+  
   bearing to target (degrees from positive x axis)
+  
   target heading    (degrees from positive x axis)
+  
   target speed      (m/s)
  
  calculates lead infront of the target assuming the projectile and target have a constant velocity (speed and direction)
