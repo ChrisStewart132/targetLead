@@ -143,7 +143,7 @@ def binary_estimate(distance_vector,velocity_vector,target_speed,estimate=100, d
     an+1 = an - f(n)/f'(n)
     '''
     x = estimate#time estimate
-    s = PROJECTILE_SPEED#speed of projectile m/s
+    s = float(projectile_speed_entry.get())#PROJECTILE_SPEED#speed of projectile m/s
     a = distance_vector.x
     b = velocity_vector.x
     c = distance_vector.y
@@ -151,8 +151,8 @@ def binary_estimate(distance_vector,velocity_vector,target_speed,estimate=100, d
     f = s**2 - (a/x + b)**2 - (c/x + d)**2
     f_dash = ((-2*(-a**2-c**2))/(x**3)) - ((-2*a*b-2*c*d)/x**2)
     difference = f/f_dash
-    #print(difference)
-    if abs(difference) < 0.001:
+    print(difference)
+    if abs(difference) < 0.1:
         return estimate - difference
     return binary_estimate(distance_vector,velocity_vector,target_speed,estimate - difference, difference, depth+1)
     
@@ -189,7 +189,9 @@ def render():#stationary object and moving camera
         canvas.coords(OBJECTS[i-1],v1.x,v1.y, v2.x,v2.y)#uses line object id to update the lines coordinates
     #root.after(TIME_STEP,render)
 
-def run():    
+
+def run():
+    PROJECTILE_SPEED = float(projectile_speed_entry.get())
     distance = float(distance_entry.get())
     target_speed = float(target_speed_entry.get())
     angle = float(bearing_entry.get()) * pi/180
@@ -222,7 +224,7 @@ def run():
     for i in range(len(VERTICES)):
         VERTICES[i].y *= -1#invert y as +y goes down tkinter window
     render()
-    print(VERTICES)
+    #print(VERTICES)
     
 
 root = tkinter.Tk()
@@ -244,6 +246,9 @@ target_heading_entry.insert(0,'135')
 target_speed_entry = tkinter.Entry(canvas, width=label_width) 
 target_speed_entry.grid(row=4,column=0)
 target_speed_entry.insert(0,'5.1')
+projectile_speed_entry = tkinter.Entry(canvas, width=label_width) 
+projectile_speed_entry.grid(row=5,column=0)
+projectile_speed_entry.insert(0,'22.6356')
 #GUI entry label elements
 distance_label = tkinter.Label(canvas,text="distance",font=(font_style, font_size))
 distance_label.grid(row=1,column=1,columnspan=5)
@@ -253,11 +258,13 @@ target_heading_label = tkinter.Label(canvas,text="target heading",font=(font_sty
 target_heading_label.grid(row=3,column=1,columnspan=5)
 target_speed_label = tkinter.Label(canvas,text="target speed",font=(font_style, font_size))
 target_speed_label.grid(row=4,column=1,columnspan=5)
+target_speed_label = tkinter.Label(canvas,text="projectile speed",font=(font_style, font_size))
+target_speed_label.grid(row=5,column=1,columnspan=5)
 
 projectile_lead_angle_label = tkinter.Label(canvas,text="lead:",font=(font_style, font_size))
-projectile_lead_angle_label.grid(row=5,column=0,columnspan=1)
+projectile_lead_angle_label.grid(row=6,column=0,columnspan=1)
 projectile_lead_angle_result_label = tkinter.Label(canvas,text="",font=(font_style, font_size))
-projectile_lead_angle_result_label.grid(row=5,column=1,columnspan=5)
+projectile_lead_angle_result_label.grid(row=6,column=1,columnspan=5)
 
 canvas.pack(fill=tkinter.BOTH, expand=1)
 root.geometry(f"{WINDOW_DIMENSIONS.x}x{WINDOW_DIMENSIONS.y}+300+300")
