@@ -11,6 +11,9 @@ Takes inputs through GUI:
   
   target speed      (m/s)
  
+  projectile speed  (m/s)
+  
+  
  calculates lead infront of the target assuming the projectile and target have a constant velocity (speed and direction)
  result is given as an angle in degrees from the positive x axis.
  
